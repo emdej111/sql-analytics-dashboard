@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens: a cool, blue/teal-led palette for a "data analytics" feel.
+ * --color-accent (blue) and --color-teal (aqua) are exactly categorical
+ * slots 1 and 3 from the validated chart palette (see components/chartTheme.ts),
+ * so KPI accents, buttons, and chart series read as one cohesive system
+ * instead of drifting into a second, unrelated color language.
+ */
+@theme {
+  --color-page: #eef2f8;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f5f8fc;
+  --color-ink: #0f1a2e;
+  --color-ink-secondary: #47536b;
+  --color-ink-muted: #8592a8;
+  --color-line: #e1e7f0;
+
+  --color-accent: #2a78d6;
+  --color-accent-dark: #124e93;
+  --color-accent-soft: #e7f0fc;
+
+  --color-teal: #1baf7a;
+  --color-teal-dark: #0f7f58;
+  --color-teal-soft: #e2f7ef;
+}
