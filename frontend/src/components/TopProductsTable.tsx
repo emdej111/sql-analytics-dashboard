@@ -17,6 +17,11 @@ export function TopProductsTable({ products, loading }: TopProductsTableProps) {
   return (
     <div className="rounded-xl border border-line bg-surface p-5 shadow-sm sm:p-6">
       <h2 className="text-base font-semibold tracking-tight text-ink">Top products by revenue</h2>
+      <p className="mt-1 text-xs text-ink-muted">
+        Ranked by total revenue, so higher-priced categories like Bikes naturally dominate this list. See{" "}
+        <span className="font-medium text-ink-secondary">Revenue by category</span> above for the fuller picture
+        across all categories.
+      </p>
       <div className={`mt-4 transition-opacity ${loading && !isEmpty ? "opacity-50" : "opacity-100"}`}>
         {showSkeleton && <TableSkeleton />}
         {showEmptyState && (

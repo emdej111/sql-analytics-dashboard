@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { getKpis, getSalesByTerritory, getSalesOverTime, getTopProducts } from "../api/client";
-import type { DashboardFilters, KPIs, SalesOverTimePoint, TerritorySales, TopProduct } from "../api/types";
+import { getKpis, getSalesByCategory, getSalesByTerritory, getSalesOverTime, getTopProducts } from "../api/client";
+import type { CategorySales, DashboardFilters, KPIs, SalesOverTimePoint, TerritorySales, TopProduct } from "../api/types";
 import { formatMonthLabel } from "../lib/format";
+import { CategoryChartCard } from "./CategoryChartCard";
 import { FilterBar } from "./FilterBar";
 import { BarChartIcon, DollarSignIcon, ShoppingCartIcon, TrendingUpIcon, UsersIcon } from "./icons";
 import { KPICard } from "./KPICard";
@@ -18,6 +19,7 @@ export function Dashboard() {
   const [salesOverTime, setSalesOverTime] = useState<SalesOverTimePoint[]>([]);
   const [topProducts, setTopProducts] = useState<TopProduct[]>([]);
   const [salesByTerritory, setSalesByTerritory] = useState<TerritorySales[]>([]);
+  const [salesByCategory, setSalesByCategory] = useState<CategorySales[]>([]);
   const [territoryOptions, setTerritoryOptions] = useState<TerritorySales[]>([]);
 
   // Starts true so the first paint shows chart skeletons instead of a flash
@@ -46,13 +48,15 @@ export function Dashboard() {
       getSalesOverTime(filters),
       getTopProducts(filters),
       getSalesByTerritory(filters),
+      getSalesByCategory(filters),
     ])
-      .then(([kpisResult, salesOverTimeResult, topProductsResult, salesByTerritoryResult]) => {
+      .then(([kpisResult, salesOverTimeResult, topProductsResult, salesByTerritoryResult, salesByCategoryResult]) => {
         if (cancelled) return;
         setKpis(kpisResult);
         setSalesOverTime(salesOverTimeResult);
         setTopProducts(topProductsResult);
         setSalesByTerritory(salesByTerritoryResult);
+        setSalesByCategory(salesByCategoryResult);
       })
       .catch((err: Error) => {
         if (!cancelled) setError(err.message);
@@ -77,7 +81,7 @@ export function Dashboard() {
             <BarChartIcon className="h-6 w-6 text-white" />
           </div>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-teal-100/80">AdventureWorks sales</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-teal-100/80">Sales analytics</p>
             <h1 className="mt-1 text-2xl font-bold tracking-tight text-white sm:text-3xl">SQL Analytics Dashboard</h1>
             <p className="mt-1 text-sm text-blue-100/80">
               KPIs, trends, and top performers across your sales territories.
@@ -156,6 +160,11 @@ export function Dashboard() {
             loading={loading}
           />
         </div>
+
+        <CategoryChartCard
+          data={salesByCategory.map((c) => ({ label: c.category, value: c.total_sales }))}
+          loading={loading}
+        />
 
         <TopProductsTable products={topProducts} loading={loading} />
       </main>

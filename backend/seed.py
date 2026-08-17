@@ -34,30 +34,99 @@ TERRITORIES = [
     ("Australia", "AU", "Pacific"),
 ]
 
-# (name, category, price range)
+# Variant lists used to expand a single template into multiple SKUs.
+FRAME_SIZES = ["44", "48", "52", "56", "58", "60"]
+CLOTHING_SIZES = ["S", "M", "L", "XL", "XXL"]
+
+# (name_template, category, price range, size variants or None for a single SKU)
 PRODUCT_TEMPLATES = [
-    ("Mountain-{n}", "Bikes", (900, 2800)),
-    ("Road-{n}", "Bikes", (800, 2600)),
-    ("Touring-{n}", "Bikes", (700, 2200)),
-    ("HL Road Frame", "Components", (300, 600)),
-    ("LL Road Frame", "Components", (150, 350)),
-    ("Chainring Bolts", "Components", (5, 15)),
-    ("Front Derailleur", "Components", (40, 120)),
-    ("Rear Derailleur", "Components", (50, 150)),
-    ("ML Mountain Handlebars", "Components", (60, 130)),
-    ("Short-Sleeve Classic Jersey", "Clothing", (40, 70)),
-    ("Long-Sleeve Logo Jersey", "Clothing", (45, 80)),
-    ("Bike Shorts", "Clothing", (50, 90)),
-    ("Full-Finger Gloves", "Clothing", (20, 40)),
-    ("Sport-100 Helmet", "Accessories", (25, 45)),
-    ("Water Bottle", "Accessories", (5, 10)),
-    ("Bottle Cage", "Accessories", (8, 20)),
-    ("Patch Kit", "Accessories", (3, 8)),
-    ("Mountain Tire", "Accessories", (20, 45)),
-    ("Road Tire", "Accessories", (15, 35)),
-    ("Bike Lock", "Accessories", (25, 60)),
+    # Bikes — few product lines, sold in multiple frame sizes.
+    ("Mountain-{n}", "Bikes", (900, 2800), FRAME_SIZES),
+    ("Road-{n}", "Bikes", (800, 2600), FRAME_SIZES),
+    ("Touring-{n}", "Bikes", (700, 2200), FRAME_SIZES),
+
+    # Components — many distinct parts, not sized like apparel.
+    ("HL Road Frame", "Components", (300, 600), None),
+    ("LL Road Frame", "Components", (150, 350), None),
+    ("HL Mountain Frame", "Components", (300, 650), None),
+    ("LL Mountain Frame", "Components", (150, 380), None),
+    ("Chainring Bolts", "Components", (5, 15), None),
+    ("Chainring Nut", "Components", (3, 8), None),
+    ("Chainring", "Components", (20, 60), None),
+    ("Crown Race", "Components", (10, 25), None),
+    ("Front Derailleur", "Components", (40, 120), None),
+    ("Rear Derailleur", "Components", (50, 150), None),
+    ("ML Mountain Handlebars", "Components", (60, 130), None),
+    ("HL Mountain Handlebars", "Components", (80, 160), None),
+    ("Road Handlebars", "Components", (50, 110), None),
+    ("Mountain Crankset", "Components", (90, 220), None),
+    ("Road Crankset", "Components", (100, 260), None),
+    ("Chain", "Components", (15, 40), None),
+    ("Cassette", "Components", (40, 100), None),
+    ("Freewheel", "Components", (30, 70), None),
+    ("Front Brakes", "Components", (30, 80), None),
+    ("Rear Brakes", "Components", (30, 80), None),
+    ("Headset", "Components", (20, 60), None),
+    ("Bottom Bracket", "Components", (25, 70), None),
+    ("Seat Post", "Components", (20, 55), None),
+    ("Road Pedal", "Components", (30, 80), None),
+    ("Mountain Pedal", "Components", (30, 80), None),
+    ("Spokes", "Components", (2, 6), None),
+    ("Wheel Hub", "Components", (15, 45), None),
+    ("Rim", "Components", (25, 65), None),
+    ("Fork", "Components", (60, 150), None),
+    ("Shift Lever", "Components", (20, 55), None),
+    ("Brake Lever", "Components", (15, 45), None),
+    ("Cable Housing Set", "Components", (10, 25), None),
+    ("Freehub Body", "Components", (20, 50), None),
+    ("Quick Release Skewer", "Components", (10, 25), None),
+    ("Valve Stem", "Components", (2, 5), None),
+
+    # Clothing — sized apparel.
+    ("Short-Sleeve Classic Jersey", "Clothing", (40, 70), CLOTHING_SIZES),
+    ("Long-Sleeve Logo Jersey", "Clothing", (45, 80), CLOTHING_SIZES),
+    ("Long-Sleeve Tricot Jersey", "Clothing", (45, 85), CLOTHING_SIZES),
+    ("Bike Shorts", "Clothing", (50, 90), CLOTHING_SIZES),
+    ("Bib-Shorts", "Clothing", (55, 95), CLOTHING_SIZES),
+    ("Classic Vest", "Clothing", (35, 65), CLOTHING_SIZES),
+
+    # Accessories — many distinct SKUs, not sized.
+    ("Sport-100 Helmet", "Accessories", (25, 45), None),
+    ("Logo Cap", "Accessories", (8, 15), None),
+    ("Water Bottle", "Accessories", (5, 10), None),
+    ("Bottle Cage", "Accessories", (8, 20), None),
+    ("Patch Kit", "Accessories", (3, 8), None),
+    ("Mountain Tire", "Accessories", (20, 45), None),
+    ("Road Tire", "Accessories", (15, 35), None),
+    ("Touring Tire", "Accessories", (18, 40), None),
+    ("Bike Lock", "Accessories", (25, 60), None),
+    ("Cable Lock", "Accessories", (15, 35), None),
+    ("Mountain Pump", "Accessories", (15, 35), None),
+    ("Road Pump", "Accessories", (15, 35), None),
+    ("Frame Pump", "Accessories", (12, 30), None),
+    ("Hydration Pack", "Accessories", (20, 50), None),
+    ("Fender Set", "Accessories", (15, 40), None),
+    ("Kickstand", "Accessories", (10, 25), None),
+    ("Bike Bag", "Accessories", (20, 55), None),
+    ("Saddle Bag", "Accessories", (12, 30), None),
+    ("Panniers", "Accessories", (40, 90), None),
+    ("Tail Light", "Accessories", (10, 25), None),
+    ("Head Light", "Accessories", (15, 35), None),
+    ("Reflector Kit", "Accessories", (5, 15), None),
+    ("Tool Kit", "Accessories", (15, 40), None),
+    ("Multi-Tool", "Accessories", (10, 25), None),
+    ("Tire Levers", "Accessories", (3, 8), None),
+    ("Chain Tool", "Accessories", (8, 20), None),
+    ("Bike Computer", "Accessories", (25, 70), None),
+    ("Handlebar Tape", "Accessories", (8, 20), None),
+    ("Toe Clips", "Accessories", (10, 25), None),
+    ("Bar Ends", "Accessories", (10, 25), None),
+    ("Half-Finger Gloves", "Accessories", (15, 30), None),
+    ("Cycling Socks", "Accessories", (8, 15), None),
+    ("Cycling Sunglasses", "Accessories", (20, 55), None),
+    ("Saddle", "Accessories", (30, 90), None),
+    ("Bike Cover", "Accessories", (15, 40), None),
 ]
-SIZES = ["38", "40", "42", "44", "48", "52", "56", "58", "60", "62"]
 
 NUM_CUSTOMERS = 300
 NUM_ORDERS = 2000
@@ -67,10 +136,15 @@ ORDER_DATE_END = date.today()
 
 def make_products() -> list[Product]:
     products = []
-    for name_template, category, (low, high) in PRODUCT_TEMPLATES:
-        variants = SIZES[:6] if "{n}" in name_template else [None]
-        for variant in variants:
-            name = name_template.format(n=variant) if variant else name_template
+    for name_template, category, (low, high), sizes in PRODUCT_TEMPLATES:
+        variants = sizes if sizes else [None]
+        for size in variants:
+            if size is None:
+                name = name_template
+            elif "{n}" in name_template:
+                name = name_template.format(n=size)
+            else:
+                name = f"{name_template} - {size}"
             price = Decimal(random.randint(low * 100, high * 100)) / 100
             products.append(Product(name=name, category=category, list_price=price))
     return products

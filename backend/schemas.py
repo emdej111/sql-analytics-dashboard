@@ -25,3 +25,8 @@ class TerritorySales(BaseModel):
     territory_id: int
     territory_name: str
     total_sales: float
+
+
+class CategorySales(BaseModel):
+    category: str
+    total_sales: float

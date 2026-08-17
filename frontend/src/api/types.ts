@@ -26,6 +26,11 @@ export interface TerritorySales {
   total_sales: number;
 }
 
+export interface CategorySales {
+  category: string;
+  total_sales: number;
+}
+
 export interface DashboardFilters {
   startDate: string | null; // YYYY-MM-DD
   endDate: string | null;

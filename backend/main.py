@@ -198,3 +198,33 @@ def get_sales_by_territory(
         )
         for row in query.all()
     ]
+
+
+@app.get("/api/sales-by-category", response_model=list[schemas.CategorySales])
+def get_sales_by_category(
+    start_date: date | None = Query(None),
+    end_date: date | None = Query(None),
+    db: Session = Depends(get_db),
+):
+    _validate_date_range(start_date, end_date)
+
+    query = (
+        db.query(
+            Product.category.label("category"),
+            func.sum(LINE_TOTAL).label("total_sales"),
+        )
+        .select_from(Product)
+        .join(OrderDetail, OrderDetail.product_id == Product.id)
+        .join(Order, Order.id == OrderDetail.order_id)
+        .group_by(Product.category)
+        .order_by(func.sum(LINE_TOTAL).desc())
+    )
+    if start_date:
+        query = query.filter(Order.order_date >= start_date)
+    if end_date:
+        query = query.filter(Order.order_date <= end_date)
+
+    return [
+        schemas.CategorySales(category=row.category, total_sales=round(float(row.total_sales), 2))
+        for row in query.all()
+    ]

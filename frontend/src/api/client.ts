@@ -1,4 +1,4 @@
-import type { DashboardFilters, KPIs, SalesOverTimePoint, TerritorySales, TopProduct } from "./types";
+import type { CategorySales, DashboardFilters, KPIs, SalesOverTimePoint, TerritorySales, TopProduct } from "./types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000";
 
@@ -45,4 +45,8 @@ export function getTopProducts(filters: DashboardFilters, limit = 10): Promise<T
 
 export function getSalesByTerritory(filters: DashboardFilters): Promise<TerritorySales[]> {
   return apiGet<TerritorySales[]>("/api/sales-by-territory", dateRangeParams(filters));
+}
+
+export function getSalesByCategory(filters: DashboardFilters): Promise<CategorySales[]> {
+  return apiGet<CategorySales[]>("/api/sales-by-category", dateRangeParams(filters));
 }
