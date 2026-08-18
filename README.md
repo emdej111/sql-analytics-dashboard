@@ -82,6 +82,15 @@ source venv/bin/activate
 pytest
 ```
 
+## Deployment
+
+The backend is set up to deploy on [Railway](https://railway.app/):
+
+1. Create a new Railway project from this repo, add a **PostgreSQL** plugin to it, and set the backend service's **root directory** to `backend`. Railway auto-detects the Python app from `requirements.txt` and runs the `backend/Procfile`'s `web` process (`uvicorn main:app --host 0.0.0.0 --port $PORT`).
+2. Railway automatically injects `DATABASE_URL` for the linked Postgres plugin — `database.py` reads it from the environment, so no code changes are needed. (It also normalizes a legacy `postgres://` scheme to `postgresql://`, in case a provider ever hands out that form.)
+3. Set an `ALLOWED_ORIGINS` environment variable to a comma-separated list of the frontend origins allowed to call the API, e.g. `http://localhost:5173,https://your-frontend.vercel.app`. Update it once the production frontend URL is known — no redeploy of code required, just a variable change.
+4. Seed the database once, after the first deploy, via the [Railway CLI](https://docs.railway.app/guides/cli): `railway run python seed.py`. The script is idempotent — it checks for existing orders and skips seeding if the database is already populated — but it's a one-off data load, not something that should run automatically on every boot, so it isn't wired into the `web` process or a build step.
+
 ## Project structure
 
 ```

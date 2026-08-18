@@ -1,3 +1,4 @@
+import os
 from datetime import date
 from typing import Literal
 
@@ -14,9 +15,18 @@ from models import Customer, Order, OrderDetail, Product, SalesTerritory
 
 app = FastAPI(title="SQL Analytics Dashboard API")
 
+# Comma-separated list of allowed frontend origins, e.g.
+# "http://localhost:5173,https://my-frontend.vercel.app". Defaults to just
+# the local Vite dev server so the API stays usable out of the box.
+allowed_origins = [
+    origin.strip()
+    for origin in os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",")
+    if origin.strip()
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=allowed_origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )
