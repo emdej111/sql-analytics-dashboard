@@ -45,6 +45,7 @@ export function LineChartCard({ title, data, loading }: LineChartCardProps) {
             fill="url(#salesFill)"
             dot={false}
             activeDot={{ r: 5, fill: SERIES_COLOR, stroke: "#ffffff", strokeWidth: 2 }}
+            isAnimationActive={false}
           />
         </AreaChart>
       </ResponsiveContainer>

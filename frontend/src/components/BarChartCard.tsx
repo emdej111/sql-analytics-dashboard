@@ -38,7 +38,7 @@ export function BarChartCard({ title, data, loading, headerRight }: BarChartCard
           />
           <Tooltip content={<ChartTooltip />} cursor={{ fill: "#eef2f8" }} />
           {/* One series, nominal categories (territories) -> one color for every bar, never a rainbow. */}
-          <Bar dataKey="value" fill={SERIES_COLOR} radius={[6, 6, 0, 0]} maxBarSize={28} />
+          <Bar dataKey="value" fill={SERIES_COLOR} radius={[6, 6, 0, 0]} maxBarSize={28} isAnimationActive={false} />
         </BarChart>
       </ResponsiveContainer>
     </ChartCard>
