@@ -9,9 +9,16 @@ from sqlalchemy import func
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
-import schemas
-from database import get_db
-from models import Customer, Order, OrderDetail, Product, SalesTerritory
+try:
+    # Package import (e.g. Railway's root main.py does `from backend.main import app`).
+    from . import schemas
+    from .database import get_db
+    from .models import Customer, Order, OrderDetail, Product, SalesTerritory
+except ImportError:
+    # Standalone import (`uvicorn main:app` run from inside backend/, or pytest).
+    import schemas
+    from database import get_db
+    from models import Customer, Order, OrderDetail, Product, SalesTerritory
 
 app = FastAPI(title="SQL Analytics Dashboard API")
 

@@ -1,7 +1,10 @@
 from sqlalchemy import Column, Date, ForeignKey, Integer, Numeric, String
 from sqlalchemy.orm import relationship
 
-from database import Base
+try:
+    from .database import Base
+except ImportError:
+    from database import Base
 
 
 class SalesTerritory(Base):
